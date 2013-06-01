@@ -10,4 +10,4 @@ This allows for the possibility of multiple C# based implementations of the soun
 
 No, this is all done in the background with method calls that would usually require this in C++. (Though if you spot anything wrong, please tell me!).
 
-The only exception to this is closing the player. When you are done, simply call the GmeNative.gme_delete(IntPtr emuHandle); method.
+The only exception to this is closing the player. When you are done, simply call the ```GmeNative.gme_delete(IntPtr emuHandle)``` method.
