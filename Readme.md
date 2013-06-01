@@ -20,8 +20,8 @@ For the time being, here is how to get info from the files you load.
 
 ```
 string fileName = "[path to music file here]";
-int track = 0          // The track we'll get info from.
-int sampleRate = 48000 // Sample rate to use.
+int track = 0;          // The track we'll get info from.
+int sampleRate = 48000; // Sample rate to use.
 
 // Get an emulator handle.
 IntPtr emuHandle;
@@ -34,4 +34,7 @@ GmeTrackInfo trackInfo = GmeNative.GetTrackInfo(emuHandle, track);
 
 Console.WriteLine("Game: "   + trackInfo.game);
 Console.WriteLine("System: " + trackInfo.system);
-Console.WriteLine("Artist: " + trackInfo.
+Console.WriteLine("Artist: " + trackInfo.author);
+// ... etc
+
+```
