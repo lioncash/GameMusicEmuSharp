@@ -110,7 +110,7 @@ namespace GameMusicEmuSharp
 		/// <param name="sampleRate">The sample rate to play this file at.</param>
 		/// <returns>An IntPtr reference. Or a string error message if an error occurs.</returns>
 		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-		public static extern string gme_open_file(string path, out IntPtr emuOut, int sampleRate);
+		private static extern string gme_open_file(string path, out IntPtr emuOut, int sampleRate);
 
 		/// <summary>
 		/// Starts playing a track.
