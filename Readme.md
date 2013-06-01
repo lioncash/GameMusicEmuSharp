@@ -24,8 +24,7 @@ int track = 0;          // The track we'll get info from.
 int sampleRate = 48000; // Sample rate to use.
 
 // Get an emulator handle.
-IntPtr emuHandle;
-GmeNative.gme_open_file(fileName, out emuHandle, sampleRate);
+IntPtr emuHandle = GmeNative.OpenFile(fileName, sampleRate);
 
 // Get info about the track (Note that many of the supported formats can have more than one track in them).
 GmeTrackInfo trackInfo = GmeNative.GetTrackInfo(emuHandle, track);
