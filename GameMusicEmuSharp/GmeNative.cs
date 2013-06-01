@@ -11,6 +11,21 @@ namespace GameMusicEmuSharp
 		#region Interface Methods
 
 		/// <summary>
+		/// Encapsulates gme_open_file. Opens a given file and returns the required emulator handle. 
+		/// </summary>
+		/// <param name="fileName">Path to the file to open.</param>
+		/// <param name="sampleRate">The sample rate to use during playback.</param>
+		/// <returns>An emulator handle.</returns>
+		public static IntPtr OpenFile(string fileName, int sampleRate)
+		{
+			// Get an emulator handle.
+			IntPtr emulatorHandle;
+			gme_open_file(fileName, out emulatorHandle, sampleRate);
+
+			return emulatorHandle;
+		}
+
+		/// <summary>
 		/// Encapsulates gme_voice_name. Gets the name of voice 'i'.
 		/// <br/>
 		/// The valid indexes for voices are from 0 - gme_voice_count() - 1.
