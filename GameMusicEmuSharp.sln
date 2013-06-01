@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameMusicEmuSharp", "GameMusicEmuSharp\GameMusicEmuSharp.csproj", "{23D5D22E-4C22-4633-8D47-C2E26C8C9C5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameMusicEmuSharpExample", "GameMusicEmuSharpExample\GameMusicEmuSharpExample.csproj", "{608D220C-6F91-4D60-B704-5B39E026D1E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{23D5D22E-4C22-4633-8D47-C2E26C8C9C5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23D5D22E-4C22-4633-8D47-C2E26C8C9C5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23D5D22E-4C22-4633-8D47-C2E26C8C9C5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{608D220C-6F91-4D60-B704-5B39E026D1E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{608D220C-6F91-4D60-B704-5B39E026D1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{608D220C-6F91-4D60-B704-5B39E026D1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{608D220C-6F91-4D60-B704-5B39E026D1E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
