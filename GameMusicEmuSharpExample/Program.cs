@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
 using GameMusicEmuSharp;
 
 namespace GameMusicEmuSharpExample
@@ -9,7 +12,7 @@ namespace GameMusicEmuSharpExample
 		{
 			const string fileName = "Super Mario Bros. 3.nsf";
 			const int sampleRate = 48000;
-			
+
 			// Get the emulator handle.
 			IntPtr emulatorHandle = GmeNative.OpenFile(fileName, sampleRate);
 
@@ -52,10 +55,16 @@ namespace GameMusicEmuSharpExample
 
 			Console.WriteLine();
 
-
+			// Equalizer info.
 			Console.WriteLine("Treble: " + equalizer.Treble);
 			Console.WriteLine("Bass: "   + equalizer.Bass);
-			
+			Console.WriteLine();
+
+			// GmeType info.
+			GmeType type = GmeNative.GetType(emulatorHandle);
+			Console.WriteLine("Type: "        + type.system);
+			Console.WriteLine("Track Count: " + type.trackCount); // Zero = non-fixed track count for the format.
+			Console.WriteLine("Supports multitrack: " + GmeNative.gme_type_multitrack(ref type));
 
 			// Keep the console window up.
 			Console.ReadLine();

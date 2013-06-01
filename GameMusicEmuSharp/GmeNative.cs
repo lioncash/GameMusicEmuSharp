@@ -93,6 +93,18 @@ namespace GameMusicEmuSharp
 			gme_set_equalizer(emuHandle, ref equalizer);
 		}
 
+		/// <summary>
+		/// Encapuslates gme_type. Gets the type info for the loaded file.
+		/// </summary>
+		/// <param name="emuHandle">The IntPtr handle to a MusicEmu reference.</param>
+		/// <returns>The type info for the loaded file.</returns>
+		public static GmeType GetType(IntPtr emuHandle)
+		{
+			IntPtr typePtr = gme_type(emuHandle);
+
+			return (GmeType) Marshal.PtrToStructure(typePtr, typeof (GmeType));
+		}
+
 		#endregion
 
 		#region P/Invoke Methods
@@ -327,6 +339,35 @@ namespace GameMusicEmuSharp
 		/// <param name="enabled">Whether or not to enable accurate sound emulation.</param>
 		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern void gme_enable_accuracy(IntPtr emuHandle, bool enabled);
+
+
+		// Game Music Types
+
+
+		/// <summary>
+		/// Gets the type of emulator.
+		/// </summary>
+		/// <param name="emuHandle">An IntPtr handle to a MusicEmu reference.</param>
+		/// <returns>The type of emulator.</returns>
+		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+		private static extern IntPtr gme_type(IntPtr emuHandle);
+
+		/// <summary>
+		/// Gets the name of the game system for this music file type.
+		/// </summary>
+		/// <param name="type">The music file type.</param>
+		/// <returns>The name of the game system for this music file type.</returns>
+		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Auto)]
+		[return: MarshalAs(UnmanagedType.LPStr)]
+		public static extern string gme_type_system(ref GmeType type);
+
+		/// <summary>
+		/// Checks if this music file type supports multiple tracks.
+		/// </summary>
+		/// <param name="type">The music file type.</param>
+		/// <returns>True if this music file type supports multiple tracks. False otherwise.</returns>
+		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern bool gme_type_multitrack(ref GmeType type);
 
 		#endregion
 	}

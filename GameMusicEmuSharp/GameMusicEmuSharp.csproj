@@ -37,6 +37,7 @@
     <Compile Include="GmeEqualizer.cs" />
     <Compile Include="GmeInfo.cs" />
     <Compile Include="GmeNative.cs" />
+    <Compile Include="GmeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
