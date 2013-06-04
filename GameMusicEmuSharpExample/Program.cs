@@ -3,6 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using GameMusicEmuSharp;
+using NAudio.Wave;
 
 namespace GameMusicEmuSharpExample
 {
@@ -65,6 +66,12 @@ namespace GameMusicEmuSharpExample
 			Console.WriteLine("Type: "        + type.system);
 			Console.WriteLine("Track Count: " + type.trackCount); // Zero = non-fixed track count for the format.
 			Console.WriteLine("Supports multitrack: " + GmeNative.gme_type_multitrack(ref type));
+
+			// Play the track.
+			GmeReader reader = new GmeReader(fileName);
+			IWavePlayer player = new WaveOut();
+			player.Init(reader);
+			player.Play();
 
 			// Keep the console window up.
 			Console.ReadLine();
