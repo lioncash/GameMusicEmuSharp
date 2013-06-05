@@ -14,26 +14,4 @@ The only exception to this is closing the player. When you are done, simply call
 
 ## How do I use this?
 
-Sound playback isn't built in, just like the original library. You need to implement it with an audio system (I am working on NAudio, which is almost done).
-
-For the time being, here is how to get info from the files you load.
-
-```
-string fileName = "[path to music file here]";
-int track = 0;          // The track we'll get info from.
-int sampleRate = 48000; // Sample rate to use.
-
-// Get an emulator handle.
-IntPtr emuHandle = GmeNative.OpenFile(fileName, sampleRate);
-
-// Get info about the track (Note that many of the supported formats can have more than one track in them).
-GmeTrackInfo trackInfo = GmeNative.GetTrackInfo(emuHandle, track);
-
-// Print out the track info.
-
-Console.WriteLine("Game: "   + trackInfo.game);
-Console.WriteLine("System: " + trackInfo.system);
-Console.WriteLine("Artist: " + trackInfo.author);
-// ... etc
-
-```
+Sound playback isn't built in, just like the original library. You need to implement it with an audio system (See the GameMusicEmuSharpExample folder for an example NAudio implementation).
