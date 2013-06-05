@@ -2,7 +2,6 @@
 using GameMusicEmuSharp;
 using NAudio.Wave;
 
-// TODO: Multiple track switching.
 // TODO: Fix .vgz playback. (needs zlib I think?)
 
 namespace GameMusicEmuSharpExample
@@ -75,6 +74,17 @@ namespace GameMusicEmuSharpExample
 		{
 			get { return GmeNative.gme_tell(emuHandle); }
 			set { GmeNative.gme_seek(emuHandle, (int)value / waveFormat.BlockAlign); }
+		}
+
+		/// <summary>
+		/// Sets the track to play
+		/// </summary>
+		/// <param name="trackNum">The track to play</param>
+		public void SetTrack(int trackNum)
+		{
+			// Set that we aren't playing.
+			this.isPlaying = false;
+			this.track = trackNum;
 		}
 	}
 }
