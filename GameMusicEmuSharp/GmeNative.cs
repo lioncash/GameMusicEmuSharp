@@ -102,7 +102,7 @@ namespace GameMusicEmuSharp
 		{
 			IntPtr typePtr = gme_type(emuHandle);
 
-			return (GmeType) Marshal.PtrToStructure(typePtr, typeof (GmeType));
+			return (GmeType)Marshal.PtrToStructure(typePtr, typeof(GmeType));
 		}
 
 		#endregion
@@ -184,6 +184,14 @@ namespace GameMusicEmuSharp
 		public static extern int gme_tell(IntPtr emuHandle);
 
 		/// <summary>
+		/// The number of samples generated since the beginning of the track.
+		/// </summary>
+		/// <param name="emuHandle">An IntPtr handle to a MusicEmu reference.</param>
+		/// <returns>The number of samples generated since the beginning of the track.</returns>
+		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern int gme_tell_samples(IntPtr emuHandle);
+
+		/// <summary>
 		/// Seeks to a new time in the track.
 		/// </summary>
 		/// <remarks>
@@ -194,6 +202,15 @@ namespace GameMusicEmuSharp
 		/// <returns>An error message if an error occurs.</returns>
 		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
 		public static extern string gme_seek(IntPtr emuHandle, int msec);
+
+		/// <summary>
+		/// Seeks n samples from the beginning of the track.
+		/// </summary>
+		/// <param name="emuHandle">An IntPtr handle to a MusicEmu reference.</param>
+		/// <param name="nSamples">The number of samples to skip.</param>
+		/// <returns>An error message if an error occurs.</returns>
+		[DllImport(DllName, CallingConvention = CallingConvention.Cdecl)]
+		public static extern string gme_seek_samples(IntPtr emuHandle, int nSamples);
 
 		/// <summary>
 		/// The number of tracks contained within the music file.
