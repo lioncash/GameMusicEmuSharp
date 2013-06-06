@@ -69,11 +69,10 @@ namespace GameMusicEmuSharpExample
 			get { return trackInfo.playLength; }
 		}
 
-		// TODO: Get this working correctly.
 		public override long Position
 		{
-			get { return GmeNative.gme_tell(emuHandle); }
-			set { GmeNative.gme_seek(emuHandle, (int)value / waveFormat.BlockAlign); }
+			get { return (GmeNative.gme_tell_samples(emuHandle)/waveFormat.SampleRate)*waveFormat.AverageBytesPerSecond; }
+			set { GmeNative.gme_seek_samples(emuHandle, (int)value / waveFormat.BlockAlign); }
 		}
 
 		/// <summary>
