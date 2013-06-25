@@ -4,7 +4,7 @@ namespace GameMusicEmuSharp
 {
 	/// <summary>
 	/// Represents the gme_equalizer_t.
-	/// <p/>
+	/// <para></para>
 	/// Basically an equalizer for GME.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
@@ -12,9 +12,9 @@ namespace GameMusicEmuSharp
 	{
 		/// <summary>
 		/// Treble.
-		/// <p/>
-		/// -50.0 = muffled. <br/>
-		/// 0 = flat. <br/>
+		/// <para></para>
+		/// -50.0 = muffled. <para></para>
+		/// 0 = flat.        <para></para>
 		/// +5.0 = extra crisp.
 		/// </summary>
 		public double Treble;
@@ -22,8 +22,8 @@ namespace GameMusicEmuSharp
 		/// <summary>
 		/// Bass.
 		/// <p/>
-		/// 1 = Full bass.<br/>
-		/// 90 = Average. <br/>
+		/// 1 = Full bass.<para></para>
+		/// 90 = Average. <para></para>
 		/// 16000 = Almost no bass.
 		/// </summary>
 		public double Bass;

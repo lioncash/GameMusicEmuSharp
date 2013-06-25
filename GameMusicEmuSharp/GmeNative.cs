@@ -27,7 +27,7 @@ namespace GameMusicEmuSharp
 
 		/// <summary>
 		/// Encapsulates gme_voice_name. Gets the name of voice 'i'.
-		/// <br/>
+		/// <para></para>
 		/// The valid indexes for voices are from 0 - gme_voice_count() - 1.
 		/// </summary>
 		/// <param name="emuHandle">The IntPtr handle to a MusicEmu reference.</param>
@@ -156,7 +156,7 @@ namespace GameMusicEmuSharp
 
 		/// <summary>
 		/// Sets the time for the track to start fading out.
-		/// <br/>
+		/// <para></para>
 		/// Once the fade ends, gme_track_ended() returns true.
 		/// </summary>
 		/// <remarks>
@@ -225,9 +225,9 @@ namespace GameMusicEmuSharp
 
 		/// <summary>
 		/// Gets the most recent warning string.
-		/// <br/>
+		/// <para></para>
 		/// - Clears the current warning after returning.
-		/// <br/>
+		/// <para></para>
 		/// - Warning is also cleared when loading a file and starting a track.
 		/// </summary>
 		/// <param name="emuHandle">The IntPtr handle to a MusicEmu reference.</param>
@@ -276,7 +276,7 @@ namespace GameMusicEmuSharp
 
 		/// <summary>
 		/// Adjusts the stereo echo depth, where 0.0 = off, and 1.0 = maximum.
-		/// <para/>
+		/// <para></para>
 		/// Has no effect for GYM, SPC, and Sega Genesis VGM music.
 		/// </summary>
 		/// <param name="emuHandle">The IntPtr handle to a MusicEmu reference.</param>
@@ -295,7 +295,7 @@ namespace GameMusicEmuSharp
 
 		/// <summary>
 		/// Adjusts the song tempo, where 1.0 = normal, 0.5 = half-speed, 2.0 = double-speed.
-		/// <br/>
+		/// <para></para>
 		/// Value returned by gme_track_length() assumes tempo = 1.0.
 		/// </summary>
 		/// <param name="emuHandle">The IntPtr handle to a MusicEmu reference.</param>
@@ -313,7 +313,7 @@ namespace GameMusicEmuSharp
 
 		/// <summary>
 		/// Gets the name of voice 'i'.
-		/// <br/>
+		/// <para></para>
 		/// Valid values of i are from 0 - gme_voice_count() - 1
 		/// </summary>
 		/// <param name="emuHandle">The IntPtr handle to a MusicEmu reference.</param>
@@ -324,8 +324,8 @@ namespace GameMusicEmuSharp
 
 		/// <summary>
 		/// Sets the muting state of all voices at once using a bitmask; 
-		/// where -1 mutes all voices. <br/>
-		/// 0 unmutes them all. <br/>
+		/// where -1 mutes all voices. <para></para>
+		/// 0 unmutes them all.        <para></para>
 		/// 0x01 mutes just the first voice, etc.
 		/// </summary>
 		/// <param name="emuHandle">The IntPtr handle to a MusicEmu reference.</param>
