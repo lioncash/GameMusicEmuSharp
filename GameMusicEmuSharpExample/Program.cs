@@ -6,17 +6,28 @@ namespace GameMusicEmuSharpExample
 {
 	internal class Program
 	{
-		private const string fileName = "Super Mario Bros. 3.nsf";
-		private const int sampleRate = 48000;
-		private static int track = 0;
+		#region Fields
 
-		// Get the emulator handle.
-		private static readonly IntPtr emulatorHandle = GmeNative.OpenFile(fileName, sampleRate);
+		private const string fileName = "Super Mario Bros. 3.nsf";
+		private static int track = 0;
+		private static readonly GmeReader reader;
+
+		#endregion
+
+		#region Constructor
+
+		static Program()
+		{
+			reader = new GmeReader(fileName);
+		}
+
+		#endregion
+
+		#region Methods
 
 		internal static void Main()
 		{
 			// Play the track.
-			GmeReader reader = new GmeReader(fileName);
 			IWavePlayer player = new WaveOut();
 			player.Init(reader);
 			player.Play();
@@ -35,7 +46,7 @@ namespace GameMusicEmuSharpExample
 				keyInfo = Console.ReadKey();
 				if (keyInfo.Key == ConsoleKey.RightArrow)
 				{
-					if (track < GmeNative.gme_track_count(emulatorHandle)-1)
+					if (track < reader.TrackCount-1)
 					{
 						reader.SetTrack(++track);
 						DisplayTrackInfo(false);
@@ -50,16 +61,13 @@ namespace GameMusicEmuSharpExample
 					}
 				}
 			} while (keyInfo.Key != ConsoleKey.Escape && keyInfo.Key != ConsoleKey.Enter);
-
-			// Free the emulator handle.
-			GmeNative.gme_delete(emulatorHandle);
 		}
 
 		// Displays information about the currently playing track.
 		private static void DisplayTrackInfo(bool printExtendedTrackInfo)
 		{
 			// Get the track info
-			GmeTrackInfo trackInfo = GmeNative.GetTrackInfo(emulatorHandle, track);
+			GmeTrackInfo trackInfo = reader.TrackInfo;
 
 			Console.Clear();
 			Console.WriteLine("Song Title: " + ((trackInfo.song == "") ? "Unspecified" : trackInfo.song));
@@ -70,13 +78,13 @@ namespace GameMusicEmuSharpExample
 			Console.WriteLine("Comment: " + ((trackInfo.comment == "") ? "Unspecified" : trackInfo.comment));
 			Console.WriteLine("Dumper: " + ((trackInfo.dumper == "") ? "Unspecified" : trackInfo.dumper));
 			Console.WriteLine();
-			Console.WriteLine("Track count: " + GmeNative.gme_track_count(emulatorHandle));
+			Console.WriteLine("Track count: " + reader.TrackCount);
 			Console.WriteLine();
 
 			if (printExtendedTrackInfo)
 			{
 				// Get the current equalizer info for this track.
-				GmeEqualizer equalizer = GmeNative.GetEqualizer(emulatorHandle);
+				GmeEqualizer equalizer = reader.Equalizer;
 
 				Console.WriteLine("Length: " + ((trackInfo.length == -1) ? "Unknown" : trackInfo.length.ToString()));
 				Console.WriteLine("Play Length: " + ((trackInfo.playLength == -1) ? "Unknown" : trackInfo.playLength.ToString()));
@@ -84,15 +92,15 @@ namespace GameMusicEmuSharpExample
 				Console.WriteLine("Intro Length: " + ((trackInfo.introLength == -1) ? "Unknown" : trackInfo.introLength.ToString()));
 				Console.WriteLine();
 
-				Console.WriteLine("Voice Count: " + GmeNative.gme_voice_count(emulatorHandle));
+				Console.WriteLine("Voice Count: " + reader.VoiceCount);
 				Console.WriteLine();
 
 				Console.WriteLine("Channel Names: ");
 				Console.WriteLine();
 
-				for (int i = 0; i < GmeNative.gme_voice_count(emulatorHandle); i++)
+				for (int i = 0; i < reader.VoiceCount; i++)
 				{
-					Console.WriteLine(GmeNative.GetVoiceName(emulatorHandle, i));
+					Console.WriteLine(reader.GetVoiceName(i));
 				}
 
 				Console.WriteLine();
@@ -103,15 +111,18 @@ namespace GameMusicEmuSharpExample
 				Console.WriteLine();
 
 				// GmeType info.
-				GmeType type = GmeNative.GetType(emulatorHandle);
+				GmeType type = reader.Type;
 				Console.WriteLine("Type: " + type.system);
 				Console.WriteLine("Track Count: " + type.trackCount); // Zero = non-fixed track count for the format.
-				Console.WriteLine("Supports multitrack: " + GmeNative.gme_type_multitrack(ref type));
+				Console.WriteLine("Supports multiple tracks: " + reader.SupportsMultipleTracks);
+				Console.WriteLine();
 			}
 
 			// track+1 because multi-track files start with track 1 as index 0.
-			Console.WriteLine("Currently playing track: " + (track+1) + "/" + GmeNative.gme_track_count(emulatorHandle));
+			Console.WriteLine("Currently playing track: " + (track+1) + "/" + reader.TrackCount);
 			Console.WriteLine();
 		}
+
+		#endregion
 	}
 }

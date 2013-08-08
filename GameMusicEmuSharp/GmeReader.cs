@@ -32,21 +32,91 @@ namespace GameMusicEmuSharp
 		public GmeReader(string fileName, int sampleRate=44100, int channels=2)
 		{
 			// Open the file.
-			emuHandle = GmeNative.OpenFile(fileName, sampleRate);
+			this.emuHandle = GmeNative.OpenFile(fileName, sampleRate);
 
 			// Enable accurate sound emulation.
 			GmeNative.gme_enable_accuracy(emuHandle, true);
 
 			// Get track info
-			trackInfo = GmeNative.GetTrackInfo(emuHandle, track);
+			this.trackInfo = GmeNative.GetTrackInfo(emuHandle, track);
+			this.TrackCount = GmeNative.gme_track_count(emuHandle);
+			this.VoiceCount = GmeNative.gme_voice_count(emuHandle);
+			this.Equalizer = GmeNative.GetEqualizer(emuHandle);
+			this.Type = GmeNative.GetType(emuHandle);
+
+			GmeType tempType = this.Type; // Since properties can't be used in ref arguments.
+			this.SupportsMultipleTracks = GmeNative.gme_type_multitrack(ref tempType);
 
 			// Init the wave format.
-			waveFormat = new WaveFormat(sampleRate, 16, channels);
+			this.waveFormat = new WaveFormat(sampleRate, 16, channels);
+		}
+
+		/// <summary>
+		/// Destructor
+		/// </summary>
+		~GmeReader()
+		{
+			// Free the handle acquired for GameMusicEmu.
+			GmeNative.gme_delete(emuHandle);
 		}
 
 		#endregion
 
 		#region Properties
+
+		/// <summary>
+		/// The number of tracks in the currently loaded file.
+		/// </summary>
+		public int TrackCount
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Track info for the currently loaded track.
+		/// </summary>
+		public GmeTrackInfo TrackInfo
+		{
+			get { return trackInfo; }
+		}
+
+		/// <summary>
+		/// The number of voices in this track.
+		/// </summary>
+		public int VoiceCount
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The current equalizer for this track.
+		/// </summary>
+		public GmeEqualizer Equalizer
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The type of file format being played/read.
+		/// </summary>
+		public GmeType Type
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Whether or not the loaded format supports
+		/// multiple tracks within a single file.
+		/// </summary>
+		public bool SupportsMultipleTracks
+		{
+			get;
+			private set;
+		}
 
 		public override WaveFormat WaveFormat
 		{
@@ -96,6 +166,16 @@ namespace GameMusicEmuSharp
 			// Set that we aren't playing.
 			this.isPlaying = false;
 			this.track = trackNum;
+		}
+
+		/// <summary>
+		/// Gets the name of a voice in the track.
+		/// </summary>
+		/// <param name="voiceIndex">Voice index of the voice to get the name of.</param>
+		/// <returns>The name of the voice specified by the given index.</returns>
+		public string GetVoiceName(int voiceIndex)
+		{
+			return GmeNative.GetVoiceName(emuHandle, voiceIndex);
 		}
 
 		#endregion
