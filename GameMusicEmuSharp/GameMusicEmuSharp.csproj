@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NAudio">
+      <HintPath>..\Libraries\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -37,6 +40,7 @@
     <Compile Include="GmeEqualizer.cs" />
     <Compile Include="GmeInfo.cs" />
     <Compile Include="GmeNative.cs" />
+    <Compile Include="GmeReader.cs" />
     <Compile Include="GmeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,31 +1,35 @@
 ﻿using System;
-using GameMusicEmuSharp;
 using NAudio.Wave;
 
 // TODO: Fix .vgz playback. (needs zlib I think?)
 
-namespace GameMusicEmuSharpExample
+namespace GameMusicEmuSharp
 {
 	/// <summary>
 	/// Class for reading files supported by Game Music Emu
 	/// </summary>
 	public class GmeReader : WaveStream
 	{
+		#region Fields
+
 		private readonly IntPtr emuHandle;
 		private readonly GmeTrackInfo trackInfo;
 		private readonly WaveFormat waveFormat;
 
-		private const int sampleRate = 48000;
-		private const int channels = 2;
-
 		private int track = 0;
 		private bool isPlaying;
+
+		#endregion
+
+		#region Constructor
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
 		/// <param name="fileName">File to open using Game Music Emu.</param>
-		public GmeReader(string fileName)
+		/// <param name="sampleRate">Desired sample rate. Defaults to 44100Hz if not specified.</param>
+		/// <param name="channels">Number of channels to use. Defaults to two if not specified.</param>
+		public GmeReader(string fileName, int sampleRate=44100, int channels=2)
 		{
 			// Open the file.
 			emuHandle = GmeNative.OpenFile(fileName, sampleRate);
@@ -39,6 +43,30 @@ namespace GameMusicEmuSharpExample
 			// Init the wave format.
 			waveFormat = new WaveFormat(sampleRate, 16, channels);
 		}
+
+		#endregion
+
+		#region Properties
+
+		public override WaveFormat WaveFormat
+		{
+			get { return waveFormat; }
+		}
+
+		public override long Length
+		{
+			get { return trackInfo.playLength; }
+		}
+
+		public override long Position
+		{
+			get { return (GmeNative.gme_tell_samples(emuHandle) / waveFormat.SampleRate) * waveFormat.AverageBytesPerSecond; }
+			set { GmeNative.gme_seek_samples(emuHandle, (int)value / waveFormat.BlockAlign); }
+		}
+
+		#endregion
+
+		#region Methods
 
 		public override int Read(byte[] buffer, int offset, int count)
 		{
@@ -59,22 +87,6 @@ namespace GameMusicEmuSharpExample
 			return buffer.Length;
 		}
 
-		public override WaveFormat WaveFormat
-		{
-			get { return waveFormat; }
-		}
-
-		public override long Length
-		{
-			get { return trackInfo.playLength; }
-		}
-
-		public override long Position
-		{
-			get { return (GmeNative.gme_tell_samples(emuHandle)/waveFormat.SampleRate)*waveFormat.AverageBytesPerSecond; }
-			set { GmeNative.gme_seek_samples(emuHandle, (int)value / waveFormat.BlockAlign); }
-		}
-
 		/// <summary>
 		/// Sets the track to play
 		/// </summary>
@@ -85,5 +97,7 @@ namespace GameMusicEmuSharpExample
 			this.isPlaying = false;
 			this.track = trackNum;
 		}
+
+		#endregion
 	}
 }
