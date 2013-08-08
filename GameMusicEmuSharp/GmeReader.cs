@@ -13,7 +13,6 @@ namespace GameMusicEmuSharp
 		#region Fields
 
 		private readonly IntPtr emuHandle;
-		private readonly GmeTrackInfo trackInfo;
 		private readonly WaveFormat waveFormat;
 
 		private int track = 0;
@@ -38,7 +37,7 @@ namespace GameMusicEmuSharp
 			GmeNative.gme_enable_accuracy(emuHandle, true);
 
 			// Get track info
-			this.trackInfo = GmeNative.GetTrackInfo(emuHandle, track);
+			this.TrackInfo = GmeNative.GetTrackInfo(emuHandle, track);
 			this.TrackCount = GmeNative.gme_track_count(emuHandle);
 			this.VoiceCount = GmeNative.gme_voice_count(emuHandle);
 			this.Equalizer = GmeNative.GetEqualizer(emuHandle);
@@ -78,7 +77,8 @@ namespace GameMusicEmuSharp
 		/// </summary>
 		public GmeTrackInfo TrackInfo
 		{
-			get { return trackInfo; }
+			get;
+			private set;
 		}
 
 		/// <summary>
@@ -125,7 +125,7 @@ namespace GameMusicEmuSharp
 
 		public override long Length
 		{
-			get { return trackInfo.playLength; }
+			get { return TrackInfo.playLength; }
 		}
 
 		public override long Position
